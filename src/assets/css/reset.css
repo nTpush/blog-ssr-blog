@@ -1,0 +1,71 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol,ul,li
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+margin: 0;
+padding: 0;
+border: 0;
+outline: 0;
+font-size: 100%;
+vertical-align: baseline;
+background: transparent;
+}
+body {
+line-height: 1;
+color: #222;
+font-family: 'Helvetica';
+font-size: 14px;
+}
+
+blockquote, q {
+quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+content: "";
+content: none;
+}
+/* remember to define focus styles! */
+:focus {
+outline: 0;
+}
+/* remember to highlight inserts somehow! */
+ins {
+text-decoration: none;
+}
+del {
+text-decoration: line-through;
+}
+/* tables still need ‘cellspacing=”0″‘ in the markup */
+code {
+font-size: 16px;
+font-family: "黑体";
+line-height: 25px;
+}
+code:after, code:before, kbd:after, kbd:before {
+display: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  text-align: center;
+  margin: 20px 0;
+  color: #677690;
+}
+table th {
+  background: #DDE5F2;
+  line-height: 40px;
+}
+table tr {
+  line-height: 35px;
+}
+table tr:nth-child(2n) {
+  background: #F2F5FA;
+}
