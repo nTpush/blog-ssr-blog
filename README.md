@@ -1,30 +1,19 @@
-# my-blog
+# 项目说明
 
-> A Vue.js project
+- 因SEO需要，采用服务端渲染。
 
-## Build Setup
+## 执行
 
-``` bash
-# install dependencies
-npm install
+- npm run build
 
-# serve with hot reload at localhost:8080
-npm run dev
+- npm run dev
 
-# build for production with minification
-npm run build
+## 环境
 
-# build for production and view the bundle analyzer report
-npm run build --report
+- node v8.11.3
 
-# run unit tests
-npm run unit
+- npm v5.6.0
 
-# run e2e tests
-npm run e2e
+- webpack v4.16.5 ( g )
 
-# run all tests
-npm test
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+- vue v3.1.3 ( g )
