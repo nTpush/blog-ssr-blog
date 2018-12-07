@@ -1,5 +1,6 @@
 <template>
   <div :class="$style['wrapper']">
+    <mAbout></mAbout>
     <!-- <ul>
       <li v-for="(item,key) in articles" :key="key">{{ item.title }}</li>
     </ul>-->
@@ -14,6 +15,8 @@
       v-if="showT"
     >
       <div :class="$style['content']">
+        <mClose></mClose>
+
         <VueMarkdown
           :source="article.content"
           v-highlight
@@ -34,7 +37,8 @@ import {
 } from "@/components/Article/module";
 import VueMarkdown from "vue-markdown";
 import Velocity from "velocity-animate";
-
+import mClose from "@/blog/components/Close.vue";
+import mAbout from "@/blog/components/About.vue";
 // import {
 //   ARTICLE_MD_URL
 // } from '@/apis/API.js'
@@ -47,7 +51,9 @@ export default {
   },
   name: "BlogIndex",
   components: {
-    VueMarkdown
+    VueMarkdown,
+    mClose,
+    mAbout
   },
   data() {
     return {
@@ -101,7 +107,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style module lang="postcss">
 /* @import './css/style1.css'; */
-
+.wrapper {
+  overflow: hidden;
+}
 .wrapper::-webkit-scrollbar-track {
   background-color: transparent;
 } /* 滚动条的滑轨背景颜色 */
@@ -119,7 +127,6 @@ export default {
   /* position: absolute;
     left: 50%;
     transform: translateX(-50%); */
-  padding-top: 30px;
   min-height: 100vh;
 }
 .md {
@@ -138,9 +145,19 @@ export default {
   line-height: 40px;
 }
 
-.md h1,.md h2,.md h3,.md h4,.md h5,.md h6,.md h7 {
+.md h1,
+.md h2,
+.md h3,
+.md h4,
+.md h5,
+.md h6,
+.md h7 {
   font-size: 24px;
   margin-bottom: 30px;
+}
+.md h1 {
+  line-height: 50px;
+  border-bottom: 1px solid #f2f5fa !important;
 }
 .md p {
   margin-bottom: 0;
@@ -151,7 +168,7 @@ export default {
   margin-left: 20px;
   margin-bottom: 30px;
 }
-.md > ul > li{
+.md > ul > li {
   font-size: 14px;
 }
 
