@@ -16,13 +16,17 @@
     >
       <div :class="$style['content']">
         <mClose></mClose>
+        <mInfo></mInfo>
 
-        <VueMarkdown
-          :source="article.content"
-          v-highlight
-          v-if="showH"
-          :class="{[$style.md]: Number(article.type) === 3, [$style.md1]: Number(article.type) !== 3}"
-        ></VueMarkdown>
+        <VueMarkdown :source="article.content" v-highlight v-if="showH" :class="$style['md']"></VueMarkdown>
+        <div style="margin-bottom: 50px"></div>
+        <!-- 评论功能 -->
+        <mComment ref="comment" :class="$style['animate']" @getComment="dealGetComment"></mComment>
+        <!--评论列表-->
+        <mCommentList :class="$style['animate']" ></mCommentList>
+        <div style="margin-bottom: 100px"></div>
+        <!-- 版权、信息 -->
+        <mFooter :class="$style['animate']"></mFooter>
         <!-- <VueMarkdown :source="test" v-highlight></VueMarkdown> -->
         <!-- <div v-html="html" class="center" v-highlight></div> -->
       </div>
@@ -35,10 +39,15 @@ import {
   LODA_ARTICLES_ASYNC,
   LODA_ARTICLE_ASYNC
 } from "@/components/Article/module";
+import { ADD_COMMENT_DATA_ASYNC, READ_COMMENT_DATA_ASYNC } from "@/components/Comment/module.js";
 import VueMarkdown from "vue-markdown";
 import Velocity from "velocity-animate";
 import mClose from "@/blog/components/Close.vue";
 import mAbout from "@/blog/components/About.vue";
+import mFooter from "@/blog/components/Footer.vue";
+import mInfo from "@/blog/components/Info.vue";
+import mComment from "@/blog/components/Comment.vue";
+import mCommentList from "@/blog/components/CommentList.vue";
 // import {
 //   ARTICLE_MD_URL
 // } from '@/apis/API.js'
@@ -53,7 +62,11 @@ export default {
   components: {
     VueMarkdown,
     mClose,
-    mAbout
+    mAbout,
+    mFooter,
+    mInfo,
+    mComment,
+    mCommentList
   },
   data() {
     return {
@@ -75,18 +88,26 @@ export default {
   },
 
   methods: {
+    // 提交评论
+    dealGetComment: function (comment) {
+        console.log(comment, 'detail')
+      this.$store.dispatch(ADD_COMMENT_DATA_ASYNC, comment).then(res => {
+        if (res) {
+          this.$store.dispatch(READ_COMMENT_DATA_ASYNC, {id: this.$route.params ? this.$route.params.id : 9});
+          this.$refs.comment.clearContent()
+        }
+        console.log(res, 'res')
+      });
+    },
     beforeEnter: function(el) {
       var height = document.body.scrollWidth;
       el.style.transformOrigin = "left";
-      el.style.opacity = 0;
       el.style.top = `-${height + 200}px`;
     },
     enter: function(el, done) {
-      setTimeout(() => {
-        if (typeof window === "object") {
-          Velocity(el, { opacity: 1, top: 0 }, { duration: 1000 });
-        }
-      }, 500);
+      if (typeof window === "object") {
+        Velocity(el, { top: 0 }, { duration: 1000 });
+      }
       // Velocity(el, { opacity: 1, top: 0 }, { duration: 1000 })
     },
     // 离开时
@@ -95,9 +116,9 @@ export default {
       console.log(el, "el");
     },
     leave: function(el, done) {
-      var height = document.body.offsetHeight;
+      var height = document.body.scrollWidth;
       if (typeof window === "object") {
-        Velocity(el, { opacity: 0, top: `${height}px` }, { duration: 1000 });
+        Velocity(el, { top: `${height}px` }, { duration: 1000 });
       }
     }
   }
@@ -106,7 +127,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style module lang="postcss">
-/* @import './css/style1.css'; */
+/* @import "./css/detail.css"; */
 .wrapper {
   overflow: hidden;
 }
@@ -124,74 +145,94 @@ export default {
   width: 100%;
   background: #fff;
   margin: 10px auto;
+  position: relative;
+  padding-bottom: 100px;
   /* position: absolute;
     left: 50%;
     transform: translateX(-50%); */
   min-height: 100vh;
 }
+
 .md {
   padding: 0 10px;
-  font-size: 14px;
   color: #222;
+  line-height: 30px;
+  opacity: 0;
+  animation: opacityShow 2s forwards;
+  animation-delay: 0.1s;
+}
+.animate {
   opacity: 0;
   animation: opacityShow 1s forwards;
-  animation-delay: 1;
-  padding-bottom: 100px;
+  animation-delay: 1s;
+}
+.md h1 {
+  font-size: 28px;
+  border-bottom: 1px solid #f5f5f5;
+  padding-bottom: 20px;
+  margin-top: 20px;
+}
+.md h2 {
+  font-size: 24px;
+  margin-top: 20px;
+}
+.md h3 {
+  font-size: 20px;
+  margin-top: 20px;
+}
+.md h4 {
+  font-size: 18px;
+  margin-top: 20px;
+}
+.md h5 {
+  font-size: 14px;
+  margin-top: 20px;
+}
+.md h6 {
+  font-size: 12px;
+  margin-top: 20px;
 }
 
+.md ul {
+  padding: 0 20px;
+}
+.md ul li {
+  margin-top: 10px;
+}
+
+.md table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  text-align: center;
+  color: #677690;
+}
+.md table th {
+  background: #dde5f2;
+  line-height: 40px;
+}
+.md table tr {
+  line-height: 35px;
+}
+.md table tr:nth-child(2n) {
+  background: #f2f5fa;
+}
 .md em {
   font-size: 16px;
   font-style: normal;
   line-height: 40px;
 }
-
-.md h1,
-.md h2,
-.md h3,
-.md h4,
-.md h5,
-.md h6,
-.md h7 {
-  font-size: 24px;
-  margin-bottom: 30px;
-}
-.md h1 {
-  line-height: 50px;
-  border-bottom: 1px solid #f2f5fa !important;
-}
-.md p {
-  margin-bottom: 0;
-}
-.md ul {
-  padding: 0;
-  margin-top: 20px;
-  margin-left: 20px;
-  margin-bottom: 30px;
-}
-.md > ul > li {
-  font-size: 14px;
-}
-
-.md > ul > li > ul {
-  font-size: 12px;
+.md blockquote {
+  padding: 5px 0;
+  padding-left: 10px;
+  border-left: 5px solid #60a6e6;
   margin-bottom: 10px;
+  background: #f7fcff;
+  margin-top: 20px;
 }
-.md ul li {
-  line-height: 30px;
+.md a {
+  color: #68758e;
 }
-
-.md ul:first-of-type {
-  margin-top: 0 !important;
-}
-.md1 {
-  padding: 0 10px;
-  font-size: 14px;
-}
-
-.md1 p {
-  line-height: 30px;
-}
-
 @keyframes opacityShow {
   0% {
     opacity: 0;

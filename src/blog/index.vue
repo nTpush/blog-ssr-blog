@@ -121,6 +121,7 @@ import {
 import Velocity from "velocity-animate";
 import { setTimeout } from "timers";
 import mAbout from "@/blog/components/About.vue";
+
 export default {
   asyncData({ store, route }) {
     return store.dispatch(LODA_ARTICLES_ASYNC);
@@ -132,7 +133,7 @@ export default {
       id: "",
       showT: true,
       tagColor: ["DBB4CB", "A3BA8E", "9FD5D8", "DEC1A0", "DBBCB7"],
-      firefox: "",
+      firefox: true,
       index: 1,
       hArr: [],
       loading: false,
@@ -239,27 +240,30 @@ export default {
         }
         let ul = this.$refs["uls"];
         if (window.innerWidth > 768) {
-          this.firefox
-            ? window.removeEventListener("DOMMouseScroll", null, false)
-            : (window.onscroll = null);
-          this.firefox
-            ? wrapper.removeEventListener(
-                "DOMMouseScroll",
-                this.MouseWhellDefault,
-                false
+          console.log(this.firefox, 'this.firefox')
+            this.firefox
+              ? window.removeEventListener("DOMMouseScroll", null, false)
+              : (window.onscroll = null);
+            this.firefox
+              ? wrapper.removeEventListener(
+              "DOMMouseScroll",
+              this.MouseWhellDefault,
+              false
               )
-            : (wrapper.onscroll = this.MouseWhellDefault);
+              : wrapper.onscroll = this.MouseWhellDefault;
         } else {
-          this.firefox
-            ? wrapper.removeEventListener("DOMMouseScroll", null, false)
-            : (wrapper.onscroll = null);
-          this.firefox
-            ? window.removeEventListener(
-                "DOMMouseScroll",
-                this.MouseWhellDefault,
-                false
+          if (this.firefox) {
+            this.firefox
+              ? wrapper.removeEventListener("DOMMouseScroll", null, false)
+              : (wrapper.onscroll = null);
+            this.firefox
+              ? window.removeEventListener(
+              "DOMMouseScroll",
+              this.MouseWhellDefault,
+              false
               )
-            : (window.onscroll = this.MouseWhellDefault);
+              : (window.onscroll = this.MouseWhellDefault);
+          }
         }
         if (window.innerWidth > 992) {
           if (!this.$refs["uls"]) {

@@ -36,7 +36,7 @@ app.get('*', (req, res) => {
   }
 
   const context = {
-    title: '前端小站',
+    title: '温柔、以待',
     url: req.url
   }
   renderer.renderToString(context, (err, html) => {
