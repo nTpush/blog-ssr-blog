@@ -240,30 +240,28 @@ export default {
         }
         let ul = this.$refs["uls"];
         if (window.innerWidth > 768) {
-          console.log(this.firefox, 'this.firefox')
-            this.firefox
-              ? window.removeEventListener("DOMMouseScroll", null, false)
-              : (window.onscroll = null);
-            this.firefox
-              ? wrapper.removeEventListener(
-              "DOMMouseScroll",
-              this.MouseWhellDefault,
-              false
+          console.log(this.firefox, "this.firefox");
+          this.firefox
+            ? window.removeEventListener("DOMMouseScroll", null, false)
+            : (window.onscroll = null);
+          this.firefox
+            ? wrapper.removeEventListener(
+                "DOMMouseScroll",
+                this.MouseWhellDefault,
+                false
               )
-              : wrapper.onscroll = this.MouseWhellDefault;
+            : (wrapper.onscroll = this.MouseWhellDefault);
         } else {
-          if (this.firefox) {
-            this.firefox
-              ? wrapper.removeEventListener("DOMMouseScroll", null, false)
-              : (wrapper.onscroll = null);
-            this.firefox
-              ? window.removeEventListener(
-              "DOMMouseScroll",
-              this.MouseWhellDefault,
-              false
+          this.firefox
+            ? wrapper.removeEventListener("DOMMouseScroll", null, false)
+            : (wrapper.onscroll = null);
+          this.firefox
+            ? window.removeEventListener(
+                "DOMMouseScroll",
+                this.MouseWhellDefault,
+                false
               )
-              : (window.onscroll = this.MouseWhellDefault);
-          }
+            : (window.onscroll = this.MouseWhellDefault);
         }
         if (window.innerWidth > 992) {
           if (!this.$refs["uls"]) {
