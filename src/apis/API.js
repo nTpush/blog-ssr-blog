@@ -1,7 +1,7 @@
 let API_HOSTNAME
 if (process.env.NODE_ENV === 'production') {
 	API_HOSTNAME = 'http://118.24.194.224:20001/api'
-  // API_HOSTNAME = 'http://new-practice.local/api'
+	// API_HOSTNAME = 'http://new-practice.local/api'
 } else {
 	API_HOSTNAME = 'http://new-practice.local/api'
 }

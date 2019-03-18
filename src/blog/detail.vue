@@ -18,12 +18,18 @@
         <mClose></mClose>
         <mInfo></mInfo>
 
-        <VueMarkdown :source="article.content" v-highlight v-if="showH" :class="$style['md']"></VueMarkdown>
+        <VueMarkdown
+          class="mdImage"
+          :source="article.content"
+          v-highlight
+          v-if="showH"
+          :class="$style['md']"
+        ></VueMarkdown>
         <div style="margin-bottom: 50px"></div>
         <!-- 评论功能 -->
         <mComment ref="comment" :class="$style['animate']" @getComment="dealGetComment"></mComment>
         <!--评论列表-->
-        <mCommentList :class="$style['animate']" ></mCommentList>
+        <mCommentList :class="$style['animate']"></mCommentList>
         <div style="margin-bottom: 100px"></div>
         <!-- 版权、信息 -->
         <mFooter :class="$style['animate']"></mFooter>
@@ -39,7 +45,10 @@ import {
   LODA_ARTICLES_ASYNC,
   LODA_ARTICLE_ASYNC
 } from "@/components/Article/module";
-import { ADD_COMMENT_DATA_ASYNC, READ_COMMENT_DATA_ASYNC } from "@/components/Comment/module.js";
+import {
+  ADD_COMMENT_DATA_ASYNC,
+  READ_COMMENT_DATA_ASYNC
+} from "@/components/Comment/module.js";
 import VueMarkdown from "vue-markdown";
 import Velocity from "velocity-animate";
 import mClose from "@/blog/components/Close.vue";
@@ -89,14 +98,16 @@ export default {
 
   methods: {
     // 提交评论
-    dealGetComment: function (comment) {
-        console.log(comment, 'detail')
+    dealGetComment: function(comment) {
+      console.log(comment, "detail");
       this.$store.dispatch(ADD_COMMENT_DATA_ASYNC, comment).then(res => {
         if (res) {
-          this.$store.dispatch(READ_COMMENT_DATA_ASYNC, {id: this.$route.params ? this.$route.params.id : 9});
-          this.$refs.comment.clearContent()
+          this.$store.dispatch(READ_COMMENT_DATA_ASYNC, {
+            id: this.$route.params ? this.$route.params.id : 9
+          });
+          this.$refs.comment.clearContent();
         }
-        console.log(res, 'res')
+        console.log(res, "res");
       });
     },
     beforeEnter: function(el) {
@@ -266,5 +277,8 @@ export default {
   .content {
     width: 1024px;
   }
+}
+img {
+  max-width: 100% !important;
 }
 </style>
